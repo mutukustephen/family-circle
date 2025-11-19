@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, isAdmin, signOut } = useAuth();
   const location = useLocation();
 
   const navItems = [
