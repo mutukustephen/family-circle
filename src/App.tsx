@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Polls from "./pages/Polls";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,8 +26,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/family-tree" element={<FamilyTree />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/stories" element={<Stories />} />
+          <Route path="/stories" element={<Gallery />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/polls" element={<Polls />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
