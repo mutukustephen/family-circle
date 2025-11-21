@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BlogEditor from "@/components/BlogEditor";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -183,15 +184,7 @@ const Admin = () => {
             </TabsContent>
 
             <TabsContent value="blog">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Create Blog Post</CardTitle>
-                  <CardDescription>Share family news and stories</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Blog creation interface coming soon...</p>
-                </CardContent>
-              </Card>
+              <BlogEditor />
             </TabsContent>
 
             <TabsContent value="polls">
