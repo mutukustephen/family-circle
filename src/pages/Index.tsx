@@ -98,12 +98,12 @@ const Index = () => {
                 <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6">
                   <BookOpen className="w-7 h-7 text-accent" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Family Stories</h3>
+                <h3 className="text-2xl font-bold mb-3">Family Blog</h3>
                 <p className="text-muted-foreground mb-6">
-                  Read and share stories that define our family's journey, wisdom, and traditions.
+                  Read and share stories, updates, and news from our family members.
                 </p>
-                <Link to="/stories" className="text-primary hover:text-accent transition-colors font-semibold">
-                  Read Stories →
+                <Link to="/blog" className="text-primary hover:text-accent transition-colors font-semibold">
+                  Read Blog →
                 </Link>
               </CardContent>
             </Card>

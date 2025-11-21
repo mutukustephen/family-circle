@@ -14,6 +14,8 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import Polls from "./pages/Polls";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/stories" element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
           <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
           <Route path="/polls" element={<ProtectedRoute><Polls /></ProtectedRoute>} />
+          <Route path="/blog" element={<ProtectedRoute><Blog /></ProtectedRoute>} />
+          <Route path="/blog/:postId" element={<ProtectedRoute><BlogPost /></ProtectedRoute>} />
           <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />

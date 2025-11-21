@@ -14,6 +14,7 @@ const Navbar = () => {
     { name: "Family Tree", path: "/family-tree" },
     { name: "Gallery", path: "/gallery" },
     { name: "Stories", path: "/stories" },
+    { name: "Blog", path: "/blog" },
     { name: "Events", path: "/events" },
     { name: "Polls", path: "/polls" },
     { name: "Contact", path: "/contact" },

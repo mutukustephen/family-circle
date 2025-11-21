@@ -117,4 +117,72 @@ All colors MUST be HSL.
   .section-container {
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
+
+  /* Rich Text Editor Styles */
+  .ql-toolbar.ql-snow {
+    @apply border-border rounded-t-lg bg-muted/30;
+  }
+
+  .ql-container.ql-snow {
+    @apply border-border rounded-b-lg;
+  }
+
+  .ql-editor {
+    @apply min-h-[300px] text-foreground;
+  }
+
+  .ql-editor.ql-blank::before {
+    @apply text-muted-foreground;
+  }
+
+  /* Blog Post Content Styles (Prose) */
+  .prose {
+    @apply text-foreground;
+  }
+
+  .prose h1 {
+    @apply text-4xl font-bold mb-4 text-foreground;
+  }
+
+  .prose h2 {
+    @apply text-3xl font-bold mb-3 mt-8 text-foreground;
+  }
+
+  .prose h3 {
+    @apply text-2xl font-bold mb-2 mt-6 text-foreground;
+  }
+
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose a {
+    @apply text-primary hover:text-primary/80 underline;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply mb-4 ml-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic my-4;
+  }
+
+  .prose img {
+    @apply rounded-lg my-6 w-full;
+  }
+
+  .prose code {
+    @apply bg-muted px-2 py-1 rounded text-sm;
+  }
+
+  .prose pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto my-4;
+  }
 }
+
