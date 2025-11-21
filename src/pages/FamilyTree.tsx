@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface FamilyMember {
   name: string;
@@ -9,12 +13,19 @@ interface FamilyMember {
 }
 
 interface FamilyBranch {
+  id: string;
+  name: string;
+  description: string;
   father: string;
   mother: string;
   children: string[];
 }
 
 const FamilyTree = () => {
+  const { toast } = useToast();
+  const [branches, setBranches] = useState<FamilyBranch[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const grandparents = {
     grandfather: "Muthoka Mbeva",
     grandmother: "Teresia Kativi",
@@ -30,40 +41,103 @@ const FamilyTree = () => {
     "Jacinta Muthoka",
   ];
 
-  const families: FamilyBranch[] = [
+  const familiesData: Omit<FamilyBranch, "id" | "description">[] = [
     {
+      name: "Musa Muthoka & Mama Kyengo",
       father: "Musa Muthoka",
       mother: "Mama Kyengo",
       children: ["Kyengo (First Born)", "Eric (Second Born)", "Mummy (Last Born)"],
     },
     {
+      name: "Daniel Muthoka & Wanza",
       father: "Daniel Muthoka",
       mother: "Wanza",
       children: ["Nthiwa", "Munyao", "Paul", "Mutwiwa"],
     },
     {
+      name: "Kyalo Muthoka & Easter",
       father: "Kyalo Muthoka",
       mother: "Easter",
       children: ["Annah", "Caleb", "Veronicah"],
     },
     {
+      name: "Mwangangi Muthoka & Ma Muuo",
       father: "Mwangangi Muthoka",
       mother: "Ma Muuo",
       children: ["Muuo", "Moses", "Abigal"],
     },
     {
+      name: "Muthiani Muthoka & Ma Mwendwa",
       father: "Muthiani Muthoka",
       mother: "Ma Mwendwa",
       children: ["Mwendwa", "Prince"],
     },
     {
+      name: "Mutua Muthoka & Mercy",
       father: "Mutua Muthoka",
       mother: "Mercy",
       children: ["Elvies"],
     },
   ];
 
-  const jacintalChildren = ["Muia", "Mutheu"];
+  const jacintalData = {
+    name: "Jacinta Muthoka",
+    children: ["Muia", "Mutheu"],
+  };
+
+  useEffect(() => {
+    fetchBranches();
+  }, []);
+
+  const fetchBranches = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('family_branches')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+
+      // Map database branches with local data
+      const mappedBranches = (data || []).map((branch, index) => {
+        if (branch.name === "Jacinta Muthoka") {
+          return {
+            ...branch,
+            father: "Jacinta Muthoka",
+            mother: "",
+            children: jacintalData.children,
+          };
+        }
+        
+        const familyData = familiesData[index] || { father: "", mother: "", children: [] };
+        return {
+          ...branch,
+          father: familyData.father || "",
+          mother: familyData.mother || "",
+          children: familyData.children || [],
+        };
+      });
+
+      setBranches(mappedBranches);
+    } catch (error: any) {
+      console.error('Error fetching branches:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load family branches",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -130,48 +204,38 @@ const FamilyTree = () => {
             </h2>
             
             <div className="space-y-8 max-w-5xl mx-auto">
-              {families.map((family, index) => (
-                <Card key={index} className="card-elevated border-accent/20">
-                  <CardHeader className="bg-gradient-to-r from-accent/5 to-transparent">
-                    <CardTitle className="text-2xl">
-                      {family.father} & {family.mother}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-6">
-                    <p className="text-sm text-muted-foreground mb-4 font-semibold">Children:</p>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                      {family.children.map((child, childIndex) => (
-                        <div
-                          key={childIndex}
-                          className="bg-muted/50 rounded-lg p-3 text-center hover:bg-muted transition-colors"
-                        >
-                          <p className="font-medium">{child}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-
-              {/* Jacinta's Branch */}
-              <Card className="card-elevated border-accent/20">
-                <CardHeader className="bg-gradient-to-r from-accent/5 to-transparent">
-                  <CardTitle className="text-2xl">Jacinta Muthoka</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <p className="text-sm text-muted-foreground mb-4 font-semibold">Children:</p>
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    {jacintalChildren.map((child, childIndex) => (
-                      <div
-                        key={childIndex}
-                        className="bg-muted/50 rounded-lg p-3 text-center hover:bg-muted transition-colors"
-                      >
-                        <p className="font-medium">{child}</p>
+              {branches.map((family, index) => (
+                <Link 
+                  key={family.id}
+                  to={`/family-branch/${family.id}`}
+                  className="block"
+                >
+                  <Card className="card-elevated border-accent/20 hover:border-primary/40 transition-all cursor-pointer">
+                    <CardHeader className="bg-gradient-to-r from-accent/5 to-transparent">
+                      <CardTitle className="text-2xl flex items-center justify-between">
+                        <span>{family.name}</span>
+                        <Users className="w-5 h-5 text-accent" />
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      <p className="text-sm text-muted-foreground mb-4 font-semibold">Children:</p>
+                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {family.children.map((child, childIndex) => (
+                          <div
+                            key={childIndex}
+                            className="bg-muted/50 rounded-lg p-3 text-center hover:bg-muted transition-colors"
+                          >
+                            <p className="font-medium">{child}</p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      <p className="text-sm text-primary mt-4 font-semibold">
+                        Click to view branch details →
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
             </div>
           </div>
 
