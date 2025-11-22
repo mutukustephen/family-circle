@@ -132,7 +132,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-1">Email</h3>
-                      <p className="text-muted-foreground">contact@jonathanlegacy.family</p>
+                      <p className="text-muted-foreground">mutukustephen624@gmail.com</p>
                       <p className="text-muted-foreground">info@muthokalegacy.org</p>
                     </div>
                   </div>
@@ -147,7 +147,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-1">Phone</h3>
-                      <p className="text-muted-foreground">+254 700 000 000</p>
+                      <p className="text-muted-foreground">0797229461</p>
                       <p className="text-muted-foreground">Available Mon-Fri, 9am-5pm</p>
                     </div>
                   </div>
@@ -162,8 +162,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-1">Location</h3>
-                      <p className="text-muted-foreground">Family Homestead</p>
-                      <p className="text-muted-foreground">Village Community, Kenya</p>
+                      <p className="text-muted-foreground">Makokani</p>
+                      <p className="text-muted-foreground">Uiiini Community, Kenya</p>
                     </div>
                   </div>
                 </CardContent>

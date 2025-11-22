@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogOut, Shield } from "lucide-react";
+import { Menu, X, LogOut, Shield, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -67,10 +67,18 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-2">
             {user ? (
-              <Button onClick={signOut} variant="outline" size="sm">
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </Button>
+              <>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/profile">
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </Link>
+                </Button>
+                <Button onClick={signOut} variant="outline" size="sm">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </>
             ) : (
               <Button asChild variant="outline" size="sm">
                 <Link to="/auth">Login</Link>
@@ -122,17 +130,29 @@ const Navbar = () => {
                 </Link>
               )}
               {user ? (
-                <Button
-                  onClick={() => {
-                    signOut();
-                    setIsOpen(false);
-                  }}
-                  variant="outline"
-                  className="w-full justify-start"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
-                </Button>
+                <>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
+                    <Link to="/profile" onClick={() => setIsOpen(false)}>
+                      <User className="w-4 h-4 mr-2" />
+                      Profile
+                    </Link>
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full justify-start"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </Button>
+                </>
               ) : (
                 <Button asChild variant="outline" className="w-full justify-start">
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
